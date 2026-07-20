@@ -14,7 +14,32 @@ const previousProject = projects[(projectIndex - 1 + projects.length) % projects
 const nextProject = projects[(projectIndex + 1) % projects.length];
 ---
 
-<Layout title={`${project.title} | Anjana Wijerathna`} description={project.summary} image={project.image}>
+<Layout
+  title={`${project.title} | Anjana Wijerathna`}
+  description={`${project.summary} Anjana's contribution: ${project.contribution}`}
+  image={project.image}
+  imageAlt={project.imageAlt ?? `${project.title} project preview`}
+  type="article"
+  keywords={`${project.title}, ${project.category}, ${project.stack.join(", ")}, Anjana Wijerathna`}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.summary,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Web",
+    author: {
+      "@type": "Person",
+      name: "Anjana Wijerathna",
+      url: "https://anjanaw.vercel.app/"
+    },
+    codeRepository: project.github,
+    url: project.demo ?? project.github,
+    programmingLanguage: project.stack,
+    keywords: project.stack.join(", "),
+    mainEntityOfPage: `https://anjanaw.vercel.app/projects/${project.slug}/`
+  }}
+>
   <Nav />
   <main id="main-content" class="site-frame">
     <div class="orbit orbit-a" aria-hidden="true"></div>

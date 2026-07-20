@@ -6,15 +6,75 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
+  keywords?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = "Anjana Wijerathna | Full-Stack Developer",
   description = "Portfolio of Anjana Wijerathna, a full-stack developer and Computer Science undergraduate seeking an internship.",
-  image = "/images/og.png"
+  image = "/images/og.png",
+  imageAlt = "Anjana Wijerathna — full-stack developer portfolio",
+  keywords = "Anjana Wijerathna, full-stack developer, software engineering student, NIBM, Colombo, Sri Lanka, React, TypeScript, Java, Spring Boot",
+  type = "website",
+  noindex = false,
+  structuredData
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = Astro.site ?? new URL("https://anjanaw.vercel.app");
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const absoluteImage = new URL(image, siteUrl);
+const personImage = new URL("/images/profile.jpeg", siteUrl);
+const imageType = /\.(jpe?g)$/i.test(image) ? "image/jpeg" : /\.webp$/i.test(image) ? "image/webp" : "image/png";
+const siteUrlString = siteUrl.toString();
+const canonicalString = canonical.toString();
+const siteSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrlString}#person`,
+      name: "Anjana Wijerathna",
+      url: siteUrlString,
+      image: personImage.toString(),
+      jobTitle: "Full-stack developer",
+      description: "Computer Science undergraduate and full-stack developer based in Colombo, Sri Lanka.",
+      email: "mailto:dulannimsara453@gmail.com",
+      sameAs: [
+        "https://github.com/anjanadulan",
+        "https://www.linkedin.com/in/anjanawijerathna/"
+      ],
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "National Institute of Business Management",
+        alternateName: "NIBM"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrlString}#website`,
+      name: "Anjana Wijerathna — Full-stack developer",
+      url: siteUrlString,
+      description,
+      inLanguage: "en",
+      publisher: { "@id": `${siteUrlString}#person` }
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonicalString}#webpage`,
+      url: canonicalString,
+      name: title,
+      description,
+      inLanguage: "en",
+      isPartOf: { "@id": `${siteUrlString}#website` },
+      about: { "@id": `${siteUrlString}#person` }
+    }
+  ]
+};
+const extraSchemas = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
 
 ---
 
@@ -24,22 +84,37 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Anjana Wijerathna" />
+    <meta name="creator" content="Anjana Wijerathna" />
+    <meta name="application-name" content="Anjana Wijerathna Portfolio" />
     <meta name="theme-color" content="#141316" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-    <link rel="canonical" href={canonical} />
+    <link rel="canonical" href={canonicalString} />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Anjana Wijerathna" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.site)} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage.toString()} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:type" content={imageType} />
+    <meta property="og:url" content={canonicalString} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <meta name="twitter:image" content={absoluteImage.toString()} />
+    <meta name="twitter:image:alt" content={imageAlt} />
     <title>{title}</title>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(siteSchema)} />
+    {extraSchemas.map((schema) => <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />)}
     <ClientRouter fallback="animate" />
     <script is:inline>
       (() => {
