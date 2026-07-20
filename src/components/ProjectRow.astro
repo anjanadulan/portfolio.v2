@@ -1,0 +1,34 @@
+---
+import type { Project } from "../data/projects";
+
+interface Props {
+  project: Project;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+---
+
+<article class:list={["project-entry", index % 2 === 1 && "project-entry-reverse"]} data-reveal>
+  <div class="project-entry-copy">
+    <div class="project-entry-label">
+      <span>{String(index + 1).padStart(2, "0")}</span>
+      <span>{project.context}</span>
+    </div>
+    <p class="project-entry-category">{project.category}</p>
+    <h2 transition:name={`project-title-${project.slug}`}><a href={`/projects/${project.slug}/`}>{project.title}</a></h2>
+    <p class="project-entry-summary">{project.summary}</p>
+    <div class="project-entry-stack" aria-label={`${project.title} technologies`}>
+      {project.stack.slice(0, 5).map((tag) => <span>{tag}</span>)}
+    </div>
+    <a class="project-entry-link" href={`/projects/${project.slug}/`}><span>Open case study</span><b>↗</b></a>
+  </div>
+  <a class="project-entry-media" href={`/projects/${project.slug}/`} aria-label={`Open ${project.title} case study`}>
+    {project.image ? (
+      <img src={project.image} alt={project.imageAlt} loading="lazy" />
+    ) : (
+      <span class="project-entry-placeholder"><strong>{project.title}</strong><small>{project.category}</small></span>
+    )}
+    <span class="project-entry-media-index">0{index + 1} / 04</span>
+  </a>
+</article>

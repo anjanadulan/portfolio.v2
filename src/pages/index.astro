@@ -1,0 +1,108 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import { projects, experiments } from "../data/projects";
+---
+
+<Layout>
+  <Nav />
+  <main id="main-content" class="site-frame">
+    <div class="orbit orbit-a" aria-hidden="true"></div>
+    <div class="orbit orbit-b" aria-hidden="true"></div>
+
+    <section class="black-hero" aria-labelledby="hero-title">
+      <div class="section-marker">... / Home ...</div>
+      <div class="hero-dots" aria-hidden="true">•••</div>
+      <div class="hero-side-note"><em>Software engineer</em><br />for real-world systems</div>
+      <div class="hero-meta"><span>&gt;_</span><em>Colombo, Sri Lanka</em><br />Available for internships</div>
+      <div class="hero-title-wrap" data-reveal data-visible>
+        <h1 id="hero-title">Full-stack<br /><span>developer</span></h1>
+        <p>Computer Science undergraduate building maintainable software across services, interfaces, and embedded systems.</p>
+        <div class="hero-actions">
+          <a class="capsule-button" href="#work">View projects <b>↗</b></a>
+          <a class="text-link" href="/resume.pdf" data-astro-reload>Résumé ↗</a>
+        </div>
+      </div>
+      <div class="hero-device" data-reveal data-visible>
+        <div class="device-screen">
+          <div class="device-topline"><span>anjana.w</span><span>portfolio / 2026</span></div>
+          <p class="device-kicker">Selected systems</p>
+          <p class="device-heading">Built from<br /><i>first principles.</i></p>
+          <div class="device-projects"><span>BookNest</span><span>Smart Aqua</span><span>AgroChain</span></div>
+          <img src="/images/smart-aqua-concept.png" alt="Smart Aqua automation project concept" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section class="about-block" id="about" aria-labelledby="about-title">
+      <div class="section-marker">... / About me ...</div>
+      <div class="about-intro" data-reveal>
+        <p>Hello, I’m <strong>Anjana Wijerathna</strong> — a second-year Software Engineering student at NIBM. I make software that connects thoughtful data models with interfaces people can actually use.</p>
+      </div>
+      <div class="about-layout">
+        <div class="about-copy">
+          <h2 id="about-title">A student<br /><span>who ships.</span></h2>
+          <p>My work moves between backend services, databases, browser experiences, Java systems, and practical IoT products. I am currently looking for an internship where I can contribute, learn quickly, and own meaningful pieces of a product.</p>
+          <a class="round-link" href="mailto:dulannimsara453@gmail.com" aria-label="Email Anjana">↗</a>
+        </div>
+        <figure class="about-photo">
+          <img src="/images/profile.jpeg" alt="Anjana Wijerathna wearing a black suit" loading="lazy" />
+          <figcaption><span>02 / 28</span><span>Graduating 2028</span></figcaption>
+        </figure>
+      </div>
+      <div class="skill-grid" data-liquid-glass="panel">
+        <div class="skill-card skill-card-wide"><h3>Frontend</h3><p>TypeScript / React / Astro / Tailwind CSS / HTML / CSS</p></div>
+        <div class="skill-card"><h3>Backend</h3><p>Java / Spring Boot / Node.js / Express / REST APIs</p></div>
+        <div class="skill-card"><h3>Data</h3><p>MySQL / PostgreSQL / Prisma / JDBC</p></div>
+        <div class="skill-card skill-card-offset"><h3>Systems</h3><p>ESP32 / NodeMCU / WebSockets / Arduino / Git</p></div>
+      </div>
+    </section>
+
+    <section class="work-block" id="work" aria-labelledby="work-title">
+      <div class="work-heading">
+        <div class="section-marker projects">... / Projects ...</div>
+        <h2 id="work-title">Selected<br /><span>work</span></h2>
+        <a class="round-link" href="/projects/" aria-label="View all projects">↗</a>
+      </div>
+      <div class="project-stack">
+        {projects.map((project, index) => (
+          <article class:list={["project-card", `project-card-${index + 1}`]} data-reveal>
+            <div class="project-card-copy">
+              <p class="project-index">0{index + 1} / {project.context}</p>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <div class="tag-list">{project.stack.slice(0, 4).map((tag) => <span>{tag}</span>)}</div>
+              <a class="capsule-button capsule-button-small" href={`/projects/${project.slug}/`}>Case study <b>↗</b></a>
+            </div>
+            <div class="project-card-media">
+              {project.image ? <img src={project.image} alt={project.imageAlt} loading="lazy" /> : <div class="project-placeholder"><span>{project.title}</span><small>{project.category}</small></div>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="experiments-block" aria-labelledby="experiments-title">
+      <div class="section-marker">... / Experiments ...</div>
+      <h2 id="experiments-title">Small builds,<br /><span>sharp lessons.</span></h2>
+      <div class="experiment-list">
+        {experiments.map((experiment, index) => (
+          <article class="experiment-row">
+            <span>0{index + 1}</span><div class="experiment-row-main"><div><h3>{experiment.title}</h3><p>{experiment.summary}</p></div></div><a href={experiment.href} target="_blank" rel="noreferrer">Source ↗</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="contact-block" id="contact" aria-labelledby="contact-title">
+      <div class="section-marker">... / Contact ...</div>
+      <h2 id="contact-title">Let’s make<br /><span>something useful.</span></h2>
+      <p>Open to software engineering internships and thoughtful collaborations.</p>
+      <a class="contact-email" href="mailto:dulannimsara453@gmail.com">dulannimsara453@gmail.com ↗</a>
+      <div class="contact-links"><a href="https://github.com/anjanadulan" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/anjanawijerathna/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://walleprintslk.vercel.app" target="_blank" rel="noreferrer">Wall·E Prints</a></div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>

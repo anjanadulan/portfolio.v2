@@ -1,0 +1,60 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import ProjectRow from "../../components/ProjectRow.astro";
+import { projects, experiments } from "../../data/projects";
+---
+
+<Layout title="Projects | Anjana Wijerathna" description="Full-stack, Java, and IoT projects by Anjana Wijerathna.">
+  <Nav />
+  <main id="main-content" class="site-frame">
+    <div class="orbit orbit-a" aria-hidden="true"></div>
+    <div class="orbit orbit-b" aria-hidden="true"></div>
+
+    <section class="projects-hero" aria-labelledby="projects-title">
+      <div class="projects-hero-bar">
+        <p class="section-marker">... / Project archive ...</p>
+        <p class="projects-hero-count">04 systems <span>/</span> 03 experiments</p>
+      </div>
+      <div class="projects-hero-grid">
+        <div>
+          <p class="projects-hero-kicker">Built from practical problems</p>
+          <h1 id="projects-title">Selected<br /><span>work.</span></h1>
+        </div>
+        <div class="projects-hero-note">
+          <p>Academic builds, collaborative systems, and independent experiments across services, interfaces, data, and connected hardware.</p>
+          <a class="round-link" href="#project-list" aria-label="Jump to selected projects">↘</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects-archive" id="project-list" aria-labelledby="selected-projects-title">
+      <div class="projects-section-heading">
+        <p class="section-marker" id="selected-projects-title">... / Selected systems ...</p>
+        <p>Each project is a record of a decision: what needed to work, what I owned, and what the system taught me.</p>
+      </div>
+      <div class="project-list">
+        {projects.map((project, index) => <ProjectRow project={project} index={index} />)}
+      </div>
+    </section>
+
+    <section class="projects-experiments" aria-labelledby="experiments-title">
+      <div class="projects-experiments-heading">
+        <p class="section-marker">... / Smaller builds ...</p>
+        <h2 id="experiments-title">Experiments<br /><span>i n &nbsp m o t i o n .</span></h2>
+      </div>
+      <div class="experiment-list">
+        {experiments.map((experiment, index) => (
+          <article class="experiment-row" data-reveal>
+            <span>0{index + 1}</span>
+            <div class="experiment-row-main"><div><h3>{experiment.title}</h3><p>{experiment.summary}</p></div></div>
+            <a href={experiment.href} target="_blank" rel="noreferrer">View source ↗</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</Layout>

@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Nav from "../../components/Nav.astro";
+import Footer from "../../components/Footer.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const projectIndex = projects.findIndex((item) => item.slug === project.slug);
+const previousProject = projects[(projectIndex - 1 + projects.length) % projects.length];
+const nextProject = projects[(projectIndex + 1) % projects.length];
+---
+
+<Layout title={`${project.title} | Anjana Wijerathna`} description={project.summary} image={project.image}>
+  <Nav />
+  <main id="main-content" class="site-frame">
+    <div class="orbit orbit-a" aria-hidden="true"></div>
+    <div class="orbit orbit-b" aria-hidden="true"></div>
+
+    <article class="case-page">
+      <header class="case-hero" data-reveal data-visible>
+        <div class="case-hero-topline">
+          <a href="/projects/" class="case-back-link">&larr; All projects</a>
+          <span>{String(projectIndex + 1).padStart(2, "0")} / 04</span>
+          <span>{project.context}</span>
+        </div>
+        <div class="case-hero-heading">
+          <p class="section-marker">{project.category}</p>
+          <h1 transition:name={`project-title-${project.slug}`}>{project.title}</h1>
+        </div>
+        <div class="case-hero-intro">
+          <p>{project.summary}</p>
+          <div class="case-hero-actions">
+            <a class="capsule-button" href={project.github} target="_blank" rel="noreferrer"><span>View source</span><b>&nearr;</b></a>
+            {project.demo && <a class="case-text-link" href={project.demo} target="_blank" rel="noreferrer">Live demo &nearr;</a>}
+          </div>
+        </div>
+      </header>
+
+      <figure class="case-hero-media" data-reveal transition:name={`project-media-${project.slug}`}>
+        {project.image ? (
+          <img src={project.image} alt={project.imageAlt} loading="eager" />
+        ) : (
+          <div class="case-hero-placeholder"><span>{project.title}</span><small>{project.category}</small></div>
+        )}
+        <figcaption><span>Repository preview</span><span>0{projectIndex + 1} / 04</span></figcaption>
+      </figure>
+
+      <div class="case-content">
+        <aside class="case-facts" data-liquid-glass="panel" data-reveal>
+          <p class="section-marker">... / Project notes ...</p>
+          <dl>
+            <div><dt>Context</dt><dd>{project.context}</dd></div>
+            <div><dt>My role</dt><dd>{project.contribution}</dd></div>
+            <div><dt>Built with</dt><dd>{project.stack.join(" / ")}</dd></div>
+          </dl>
+        </aside>
+
+        <section class="case-story" data-reveal aria-labelledby="case-story-title">
+          <p class="section-marker">... / How it works ...</p>
+          <h2 id="case-story-title">What the project<br /><span>covers.</span></h2>
+          <div class="case-detail-list">
+            {project.details.map((detail, index) => (
+              <article><span>0{index + 1}</span><p>{detail}</p></article>
+            ))}
+          </div>
+          <p class="case-story-note">This case study is based on the current public repository. The implementation is still evolving as I learn from each build.</p>
+        </section>
+      </div>
+
+      <nav class="case-pagination" aria-label="Project navigation">
+        <a href={`/projects/${previousProject.slug}/`}><small>Previous project</small><strong>&larr; {previousProject.title}</strong></a>
+        <a href={`/projects/${nextProject.slug}/`} class="case-pagination-next"><small>Next project</small><strong>{nextProject.title} &rarr;</strong></a>
+      </nav>
+    </article>
+    <Footer />
+  </main>
+</Layout>

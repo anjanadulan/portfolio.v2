@@ -1,0 +1,237 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = "Anjana Wijerathna | Full-Stack Developer",
+  description = "Portfolio of Anjana Wijerathna, a full-stack developer and Computer Science undergraduate seeking an internship.",
+  image = "/images/og.png"
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#141316" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(image, Astro.site)} />
+    <title>{title}</title>
+    <ClientRouter fallback="animate" />
+    <script is:inline>
+      (() => {
+        let savedTheme = null;
+        try { savedTheme = localStorage.getItem("theme"); } catch {}
+        document.documentElement.dataset.theme = savedTheme || "light";
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="ambient-background" aria-hidden="true">
+      <img src="https://laravel.com/assets/img/welcome/background.svg" alt="" />
+      <span class="ambient-background-orb ambient-background-orb-one"></span>
+      <span class="ambient-background-orb ambient-background-orb-two"></span>
+      <span class="ambient-stars ambient-stars-one"></span>
+      <span class="ambient-stars ambient-stars-two"></span>
+    </div>
+    <div class="route-curtain" data-state="idle" aria-hidden="true" transition:persist="cinematic-curtain">
+      <div class="route-curtain__rule"></div>
+      <div class="route-curtain__content">
+        <p class="route-curtain__eyebrow" data-curtain-eyebrow>Next chapter</p>
+        <p class="route-curtain__title" data-curtain-title>Selected projects</p>
+        <p class="route-curtain__count" data-curtain-count>01 / 06</p>
+      </div>
+      <div class="route-curtain__rule"></div>
+    </div>
+    <svg class="liquid-glass-defs" width="0" height="0" aria-hidden="true" transition:persist="liquid-glass-defs">
+      <defs data-liquid-glass-defs></defs>
+    </svg>
+    <slot />
+    <script is:inline src="/liquid-glass.js"></script>
+    <script>
+      import "../scripts/liquid-glass-init";
+    </script>
+    <script is:inline>
+      (() => {
+        if (window.__anjanaPortfolioReady) return;
+        window.__anjanaPortfolioReady = true;
+
+        const chapters = {
+          "/": { title: "Home", count: "00 / 06" },
+          "/projects/": { title: "Selected projects", count: "01 / 06" },
+          "/projects/booknest/": { title: "BookNest", count: "02 / 06" },
+          "/projects/distributor-management-system/": { title: "Distributor MS", count: "03 / 06" },
+          "/projects/smart-aqua-manage-bot/": { title: "Smart Aqua", count: "04 / 06" },
+          "/projects/agrochain/": { title: "AgroChain", count: "05 / 06" }
+        };
+        const sectionChapters = {
+          "#work": { title: "Selected projects", count: "01 / 06" },
+          "#about": { title: "About Anjana", count: "Profile" },
+          "#experience": { title: "Wall·E Prints", count: "Business" },
+          "#contact": { title: "Contact", count: "Let’s talk" }
+        };
+
+        let transitionToken = 0;
+        let activeTransition = null;
+        const normalizePath = (pathname) => pathname === "/" || pathname.endsWith("/") ? pathname : `${pathname}/`;
+        const resetCurtain = (curtain) => {
+          curtain.dataset.state = "idle";
+        };
+        const waitForCover = (curtain) => new Promise((resolve) => {
+          let complete = false;
+          const finish = () => {
+            if (complete) return;
+            complete = true;
+            curtain.removeEventListener("transitionend", onTransitionEnd);
+            resolve();
+          };
+          const onTransitionEnd = (event) => {
+            if (event.target === curtain && event.propertyName === "clip-path") finish();
+          };
+          curtain.addEventListener("transitionend", onTransitionEnd);
+          window.setTimeout(finish, 960);
+        });
+        const waitForPageReady = async () => {
+          if (document.fonts?.ready) await document.fonts.ready;
+          const pendingImages = [...document.images].filter((image) => !image.complete && image.loading !== "lazy");
+          await Promise.all(pendingImages.map((image) => new Promise((resolve) => {
+            image.addEventListener("load", resolve, { once: true });
+            image.addEventListener("error", resolve, { once: true });
+          })));
+          await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        };
+
+        const setupPage = () => {
+          const themeButton = document.querySelector("[data-theme-toggle]");
+          const themeMeta = document.querySelector('meta[name="theme-color"]');
+          const updateThemeLabel = () => {
+            if (!themeButton) return;
+            const isDark = document.documentElement.dataset.theme === "dark";
+            themeButton.textContent = isDark ? "Light mode" : "Dark mode";
+            themeButton.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+            themeMeta?.setAttribute("content", isDark ? "#100e0f" : "#eee9e1");
+          };
+          updateThemeLabel();
+          if (themeButton && !themeButton.hasAttribute("data-theme-bound")) {
+            themeButton.setAttribute("data-theme-bound", "");
+            themeButton.addEventListener("click", () => {
+              const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+              document.documentElement.dataset.theme = next;
+              try { localStorage.setItem("theme", next); } catch {}
+              updateThemeLabel();
+            });
+          }
+
+          const revealItems = document.querySelectorAll("[data-reveal]");
+          if (window.matchMedia("(prefers-reduced-motion: no-preference)").matches && "IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.setAttribute("data-visible", "");
+                  observer.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.12 });
+            revealItems.forEach((item) => observer.observe(item));
+          } else {
+            revealItems.forEach((item) => item.setAttribute("data-visible", ""));
+          }
+        };
+
+        document.addEventListener("astro:page-load", setupPage);
+        document.addEventListener("astro:before-swap", (event) => {
+          const currentTheme = document.documentElement.dataset.theme;
+          if (currentTheme) event.newDocument.documentElement.dataset.theme = currentTheme;
+        });
+        document.addEventListener("astro:before-preparation", (event) => {
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          const curtain = document.querySelector(".route-curtain");
+          if (!curtain) return;
+
+          if (activeTransition) resetCurtain(curtain);
+          const token = ++transitionToken;
+          const transition = { token, signal: event.signal };
+          activeTransition = transition;
+
+          const destination = sectionChapters[event.to.hash] || chapters[normalizePath(event.to.pathname)] || {
+            title: event.sourceElement?.textContent?.trim() || "Next page",
+            count: "— / 06"
+          };
+          curtain.querySelector("[data-curtain-eyebrow]").textContent = event.direction === "back" ? "Previous chapter" : "Next chapter";
+          curtain.querySelector("[data-curtain-title]").textContent = destination.title;
+          curtain.querySelector("[data-curtain-count]").textContent = destination.count;
+          curtain.dataset.state = "cover";
+
+          const defaultLoader = event.loader;
+          const coverAnimation = waitForCover(curtain);
+          event.loader = async () => {
+            try {
+              await Promise.all([defaultLoader(), coverAnimation]);
+            } catch (error) {
+              if (activeTransition === transition) {
+                resetCurtain(curtain);
+                activeTransition = null;
+              }
+              throw error;
+            }
+          };
+          event.signal.addEventListener("abort", () => {
+            if (activeTransition !== transition) return;
+            resetCurtain(curtain);
+            activeTransition = null;
+          }, { once: true });
+        });
+        document.addEventListener("astro:after-swap", () => {
+          if (document.documentElement.dataset.astroTransition === "forward") {
+            window.scrollTo({ left: 0, top: 0, behavior: "instant" });
+          }
+        });
+        document.addEventListener("astro:page-load", async () => {
+          const curtain = document.querySelector(".route-curtain");
+          const transition = activeTransition;
+          if (!curtain || !transition || transition.signal.aborted || curtain.dataset.state !== "cover") return;
+          await waitForPageReady();
+          if (activeTransition !== transition || transition.signal.aborted || curtain.dataset.state !== "cover") return;
+          curtain.dataset.state = "reveal";
+          const finishReveal = (event) => {
+            if (event.target !== curtain || event.propertyName !== "clip-path") return;
+            curtain.removeEventListener("transitionend", finishReveal);
+            if (activeTransition === transition) {
+              resetCurtain(curtain);
+              activeTransition = null;
+            }
+          };
+          curtain.addEventListener("transitionend", finishReveal);
+          window.setTimeout(() => {
+            if (activeTransition !== transition) return;
+            resetCurtain(curtain);
+            activeTransition = null;
+          }, 960);
+        });
+      })();
+    </script>
+  </body>
+</html>

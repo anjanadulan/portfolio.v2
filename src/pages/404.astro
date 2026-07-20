@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Page not found | Anjana Wijerathna" description="The page you requested could not be found.">
+  <Nav />
+  <main id="main-content" class="site-frame">
+    <section class="not-found">
+      <p class="eyebrow">Error 404</p>
+      <h1>Wrong turn.<br /><em>Good recovery.</em></h1>
+      <p>This page does not exist, but the work is still right where you left it.</p>
+      <a class="button primary" href="/"><span>Return home</span><i aria-hidden="true">↗</i></a>
+    </section>
+    <Footer />
+  </main>
+</Layout>

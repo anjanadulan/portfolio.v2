@@ -1,0 +1,14 @@
+---
+import PortfolioNav from "./PortfolioNav";
+
+const initialPath = Astro.url.pathname;
+---
+
+<header class="portfolio-chrome" transition:name="site-navigation">
+  <a class="floating-wordmark" href="/" aria-label="Anjana Wijerathna home">
+    <span>AW</span>
+    <small>Colombo</small>
+  </a>
+  <PortfolioNav client:load transition:persist="tubelight-navigation" initialPath={initialPath} />
+  <button class="floating-theme-control" type="button" data-theme-toggle>Theme</button>
+</header>
