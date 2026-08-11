@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: "https://anjanaw.vercel.app",
+  site: "https://anjanaww.vercel.app",
   output: "static",
   integrations: [react()],
   vite: {

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Allow: /llms.txt
 
-Sitemap: https://anjanaw.vercel.app/sitemap.xml
+Sitemap: https://anjanaww.vercel.app/sitemap.xml

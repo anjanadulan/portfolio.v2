@@ -7,7 +7,7 @@
 - **Location**: Colombo, Sri Lanka
 - **Role**: Full-Stack Developer / Software Engineering Undergraduate (NIBM)
 - **Email**: dulannimsara453@gmail.com
-- **Website**: https://anjanaw.vercel.app/
+- **Website**: https://anjanaww.vercel.app/
 - **GitHub**: https://github.com/anjanadulan
 - **LinkedIn**: https://www.linkedin.com/in/anjanawijerathna/
 
@@ -23,7 +23,7 @@
 - **Stack**: Spring Boot, React, TypeScript, MySQL, Tailwind CSS, shadcn/ui
 - **Overview**: Split into five independent microservices for books, carts, orders, payments, and users, each with an isolated database model.
 - **Repository**: https://github.com/anjanadulan/BookNest
-- **Case Study**: https://anjanaw.vercel.app/projects/booknest/
+- **Case Study**: https://anjanaww.vercel.app/projects/booknest/
 
 ### Distributor Management System
 - **Type**: Enterprise Distribution Operations Software
@@ -31,21 +31,21 @@
 - **Overview**: Full-stack operations platform with role-based dashboards, inventory management, order processing, delivery tracking, and PDF export capabilities.
 - **Demo**: https://distributor-ms.vercel.app
 - **Repository**: https://github.com/anjanadulan/distributor-ms
-- **Case Study**: https://anjanaw.vercel.app/projects/distributor-management-system/
+- **Case Study**: https://anjanaww.vercel.app/projects/distributor-management-system/
 
 ### Smart Aqua Manage Bot
 - **Type**: Standalone IoT & Automation Ecosystem
 - **Stack**: ESP32, ESP32-CAM, WebSockets, Three.js, Vanilla JS
 - **Overview**: Autonomous aquarium hardware ecosystem running local control loops for feeding, water monitoring, cleaning gantries, and real-time 3D web dashboards.
 - **Repository**: https://github.com/anjanadulan/Smart-Aqua-Manage-Bot
-- **Case Study**: https://anjanaw.vercel.app/projects/smart-aqua-manage-bot/
+- **Case Study**: https://anjanaww.vercel.app/projects/smart-aqua-manage-bot/
 
 ### AgroChain
 - **Type**: Java Desktop Agricultural Supply Chain Application
 - **Stack**: Java 24, Swing, MySQL 8, JDBC
 - **Overview**: Standalone desktop software managing field crop health, harvest tracking, and direct farmer-to-buyer supply-chain workflows.
 - **Repository**: https://github.com/anjanadulan/AgroChain
-- **Case Study**: https://anjanaw.vercel.app/projects/agrochain/
+- **Case Study**: https://anjanaww.vercel.app/projects/agrochain/
 
 ## Smaller Builds & Experiments
 - **Water Quality Checker**: ESP32 TDS sensor with Firebase real-time web dashboard. (https://github.com/anjanadulan/Water-Quality-Checker)

@@ -111,7 +111,7 @@ Featured project metadata is maintained in `src/data/projects.ts`. Repository pr
 
 ## Links
 
-- Portfolio: [anjanaw.vercel.app](https://anjanaw.vercel.app)
+- Portfolio: [anjanaww.vercel.app](https://anjanaww.vercel.app)
 - GitHub: [github.com/anjanadulan](https://github.com/anjanadulan)
 - LinkedIn: [linkedin.com/in/anjanawijerathna](https://www.linkedin.com/in/anjanawijerathna/)
 - Email: [Dulannimsara453@gmail.com](mailto:Dulannimsara453@gmail.com)
