@@ -10,6 +10,19 @@ import { projects, experiments } from "../../data/projects";
   title="Projects | Anjana Wijerathna"
   description="Explore BookNest, Distributor MS, Smart Aqua Manage Bot, AgroChain, and smaller experiments by full-stack developer Anjana Wijerathna."
   keywords="Anjana Wijerathna projects, BookNest, Distributor MS, Smart Aqua Manage Bot, AgroChain, Java, Spring Boot, React, ESP32"
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Projects & Case Studies | Anjana Wijerathna",
+    description: "Featured software engineering projects, web applications, microservices, and IoT automation systems.",
+    url: "https://anjanaw.vercel.app/projects/",
+    hasPart: projects.map((p) => ({
+      "@type": "SoftwareApplication",
+      name: p.title,
+      description: p.summary,
+      url: `https://anjanaw.vercel.app/projects/${p.slug}/`
+    }))
+  }}
 >
   <Nav />
   <main id="main-content" class="site-frame">

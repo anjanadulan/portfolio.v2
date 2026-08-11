@@ -34,7 +34,7 @@ import { projects, experiments } from "../data/projects";
           <p class="device-kicker">Selected systems</p>
           <p class="device-heading">Built from<br /><i>first principles.</i></p>
           <div class="device-projects"><span>BookNest</span><span>Smart Aqua</span><span>AgroChain</span></div>
-          <img src="/images/smart-aqua-concept.png" alt="Smart Aqua automation project concept" loading="lazy" />
+          <img src="/images/smart-aqua-concept.png" alt="Smart Aqua automation project concept" loading="lazy" decoding="async" />
         </div>
       </div>
     </section>
@@ -51,7 +51,7 @@ import { projects, experiments } from "../data/projects";
           <a class="round-link" href="mailto:dulannimsara453@gmail.com" aria-label="Email Anjana">↗</a>
         </div>
         <figure class="about-photo">
-          <img src="/images/profile.jpeg" alt="Anjana Wijerathna wearing a black suit" loading="lazy" />
+          <img src="/images/profile.jpeg" alt="Anjana Wijerathna wearing a black suit" loading="lazy" decoding="async" />
           <figcaption><span>02 / 28</span><span>Graduating 2028</span></figcaption>
         </figure>
       </div>
@@ -80,7 +80,7 @@ import { projects, experiments } from "../data/projects";
               <a class="capsule-button capsule-button-small" href={`/projects/${project.slug}/`}>Case study <b>↗</b></a>
             </div>
             <div class="project-card-media">
-              {project.image ? <img src={project.image} alt={project.imageAlt} loading="lazy" /> : <div class="project-placeholder"><span>{project.title}</span><small>{project.category}</small></div>}
+              {project.image ? <img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" /> : <div class="project-placeholder"><span>{project.title}</span><small>{project.category}</small></div>}
             </div>
           </article>
         ))}

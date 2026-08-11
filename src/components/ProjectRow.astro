@@ -25,7 +25,7 @@ const { project, index } = Astro.props;
   </div>
   <a class="project-entry-media" href={`/projects/${project.slug}/`} aria-label={`Open ${project.title} case study`}>
     {project.image ? (
-      <img src={project.image} alt={project.imageAlt} loading="lazy" />
+      <img src={project.image} alt={project.imageAlt} loading="lazy" decoding="async" />
     ) : (
       <span class="project-entry-placeholder"><strong>{project.title}</strong><small>{project.category}</small></span>
     )}

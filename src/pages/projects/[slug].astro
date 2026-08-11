@@ -93,7 +93,7 @@ const nextProject = projects[(projectIndex + 1) % projects.length];
 
       <figure class="case-hero-media" data-reveal transition:name={`project-media-${project.slug}`}>
         {project.image ? (
-          <img src={project.image} alt={project.imageAlt} loading="eager" />
+          <img src={project.image} alt={project.imageAlt} loading="eager" fetchpriority="high" decoding="async" />
         ) : (
           <div class="case-hero-placeholder"><span>{project.title}</span><small>{project.category}</small></div>
         )}
