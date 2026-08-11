@@ -120,13 +120,16 @@ const extraSchemas = structuredData ? (Array.isArray(structuredData) ? structure
       (() => {
         let savedTheme = null;
         try { savedTheme = localStorage.getItem("theme"); } catch {}
-        document.documentElement.dataset.theme = savedTheme || "light";
+        if (!savedTheme) {
+          savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.dataset.theme = savedTheme;
       })();
     </script>
   </head>
   <body>
     <div class="ambient-background" aria-hidden="true">
-      <img src="https://laravel.com/assets/img/welcome/background.svg" alt="" />
+      <img src="/images/background.svg" alt="" />
       <span class="ambient-background-orb ambient-background-orb-one"></span>
       <span class="ambient-background-orb ambient-background-orb-two"></span>
       <span class="ambient-stars ambient-stars-one"></span>
@@ -148,6 +151,7 @@ const extraSchemas = structuredData ? (Array.isArray(structuredData) ? structure
     <script is:inline src="/liquid-glass.js"></script>
     <script>
       import "../scripts/liquid-glass-init";
+      import "../scripts/magnetic-init";
     </script>
     <script is:inline>
       (() => {

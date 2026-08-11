@@ -55,7 +55,62 @@ export function NavBar({ items, className, initialActive }: NavBarProps) {
     window.addEventListener("popstate", syncActiveTab);
     document.addEventListener("astro:page-load", syncActiveTab);
 
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    let observer: IntersectionObserver | null = null;
+
+    const setupObserver = () => {
+      const pathname = window.location.pathname;
+      if (pathname !== "/" && pathname !== "/index.html") return;
+
+      const sections = [
+        { id: "about", name: "About" },
+        { id: "work", name: "Projects" },
+        { id: "contact", name: "Contact" },
+      ];
+
+      const elements = sections
+        .map((s) => ({ ...s, el: document.getElementById(s.id) }))
+        .filter((s): s is { id: string; name: string; el: HTMLElement } => s.el !== null);
+
+      if (elements.length === 0) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (window.scrollY < 250) {
+            setActiveTab("Home");
+            return;
+          }
+
+          const visible = entries.find((entry) => entry.isIntersecting);
+          if (visible) {
+            const matched = elements.find((s) => s.el === visible.target);
+            if (matched) {
+              setActiveTab(matched.name);
+            }
+          }
+        },
+        { rootMargin: "-20% 0px -40% 0px", threshold: 0.1 }
+      );
+
+      elements.forEach((s) => observer?.observe(s.el));
+    };
+
+    const handleScroll = () => {
+      const pathname = window.location.pathname;
+      if ((pathname === "/" || pathname === "/index.html") && window.scrollY < 200) {
+        setActiveTab("Home");
+      }
+    };
+
+    setupObserver();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => {
+      observer?.disconnect();
+      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", syncActiveTab);
       window.removeEventListener("popstate", syncActiveTab);
       document.removeEventListener("astro:page-load", syncActiveTab);
