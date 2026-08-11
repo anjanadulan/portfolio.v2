@@ -120,10 +120,7 @@ const extraSchemas = structuredData ? (Array.isArray(structuredData) ? structure
       (() => {
         let savedTheme = null;
         try { savedTheme = localStorage.getItem("theme"); } catch {}
-        if (!savedTheme) {
-          savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        document.documentElement.dataset.theme = savedTheme;
+        document.documentElement.dataset.theme = savedTheme || "dark";
       })();
     </script>
   </head>
