@@ -21,24 +21,50 @@ const nextProject = projects[(projectIndex + 1) % projects.length];
   imageAlt={project.imageAlt ?? `${project.title} project preview`}
   type="article"
   keywords={`${project.title}, ${project.category}, ${project.stack.join(", ")}, Anjana Wijerathna`}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: project.title,
-    description: project.summary,
-    applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
-    author: {
-      "@type": "Person",
-      name: "Anjana Wijerathna",
-      url: "https://anjanaw.vercel.app/"
+  structuredData={[
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: project.title,
+      description: project.summary,
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Web",
+      author: {
+        "@type": "Person",
+        name: "Anjana Wijerathna",
+        url: "https://anjanaw.vercel.app/"
+      },
+      codeRepository: project.github,
+      url: project.demo ?? project.github,
+      programmingLanguage: project.stack,
+      keywords: project.stack.join(", "),
+      mainEntityOfPage: `https://anjanaw.vercel.app/projects/${project.slug}/`
     },
-    codeRepository: project.github,
-    url: project.demo ?? project.github,
-    programmingLanguage: project.stack,
-    keywords: project.stack.join(", "),
-    mainEntityOfPage: `https://anjanaw.vercel.app/projects/${project.slug}/`
-  }}
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://anjanaw.vercel.app/"
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Projects",
+          item: "https://anjanaw.vercel.app/projects/"
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: project.title,
+          item: `https://anjanaw.vercel.app/projects/${project.slug}/`
+        }
+      ]
+    }
+  ]}
 >
   <Nav />
   <main id="main-content" class="site-frame">
