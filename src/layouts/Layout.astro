@@ -28,7 +28,7 @@ const {
 const siteUrl = Astro.site ?? new URL("https://anjanaww.vercel.app");
 const canonical = new URL(Astro.url.pathname, siteUrl);
 const absoluteImage = new URL(image, siteUrl);
-const personImage = new URL("/images/profile.jpeg", siteUrl);
+const personImage = new URL("/images/anjana-wijerathna.jpeg", siteUrl);
 const imageType = /\.(jpe?g)$/i.test(image) ? "image/jpeg" : /\.webp$/i.test(image) ? "image/webp" : "image/png";
 const siteUrlString = siteUrl.toString();
 const canonicalString = canonical.toString();
@@ -39,10 +39,11 @@ const siteSchema = {
       "@type": "Person",
       "@id": `${siteUrlString}#person`,
       name: "Anjana Wijerathna",
+      alternateName: "Anjana Dulan Nimsara",
       url: siteUrlString,
       image: personImage.toString(),
-      jobTitle: "Full-stack developer",
-      description: "Computer Science undergraduate and full-stack developer based in Colombo, Sri Lanka.",
+      jobTitle: "Software Developer",
+      description: "Software developer specializing in enterprise Java applications and IoT systems.",
       email: "mailto:dulannimsara453@gmail.com",
       knowsAbout: [
         "Full-Stack Web Development",
@@ -71,7 +72,7 @@ const siteSchema = {
     {
       "@type": "WebSite",
       "@id": `${siteUrlString}#website`,
-      name: "Anjana Wijerathna — Full-stack developer",
+      name: "Anjana Wijerathna — Software Developer",
       url: siteUrlString,
       description,
       inLanguage: "en",
@@ -93,7 +94,18 @@ const siteSchema = {
       url: siteUrlString,
       name: "Anjana Wijerathna — Developer Profile",
       isPartOf: { "@id": `${siteUrlString}#website` },
-      mainEntity: { "@id": `${siteUrlString}#person` }
+      mainEntity: {
+        "@type": "Person",
+        name: "Anjana Wijerathna",
+        alternateName: "Anjana Dulan Nimsara",
+        jobTitle: "Software Developer",
+        image: personImage.toString(),
+        description: "Software developer specializing in enterprise Java applications and IoT systems.",
+        sameAs: [
+          "https://github.com/anjanadulan",
+          "https://www.linkedin.com/in/anjanawijerathna/"
+        ]
+      }
     }
   ]
 };
